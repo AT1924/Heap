@@ -20,6 +20,7 @@ import net.datastructures.Position;
  * Feel free to add additional comments. 
  */
 
+//TODO read
 public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> 
 		implements CompleteBinaryTree<E> {
 	
