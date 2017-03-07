@@ -16,9 +16,13 @@ import net.datastructures.Entry;
 
 public class MyHeapEntry<K,V> implements Entry<K,V> {
 
+	//TODO
+	//setter and getter on key and value
+	
 	/** 
 	 * Default constructor. You may wish to modify the parameters.
 	 */
+	//TODO modify parameters so key/value are defined at instantiation
 	public MyHeapEntry() {
 
 	}

@@ -28,6 +28,7 @@ public class MyLinkedHeapTreeTest {
 	 * A simple example of checking that the add() method adds the first element to the tree.
 	 */
 	@Test
+	//TODO pass this test
 	public void testAddOneElement() {
 		MyLinkedHeapTree<Integer> tree = new MyLinkedHeapTree<Integer>();
 		tree.add(1);
@@ -41,6 +42,8 @@ public class MyLinkedHeapTreeTest {
 		assertThat(tree.size(), is(1));
 		assertTrue(tree.size() == 1);
 	}
+	
+	//TODO -- add tests for adding/removing multiple elements
 	
 	/**
 	 * This is an example of how to test whether an exception you expect to be thrown on a certain line of code
