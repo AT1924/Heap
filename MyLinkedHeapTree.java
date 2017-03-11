@@ -58,23 +58,23 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		// else get position with opening add new position as that position's
 		// child
 		if (!hasLeft(open)) {
-			insertLeft(open, element);
+			return insertLeft(open, element);
 		} else {
-			insertRight(open, element);
+			return insertRight(open, element);
 			// open is now full, need to figure out new open
 
-			//2 situations:
-			
-			//1: open is the left child:
-			//therefore the new open is current open's parent's right child
-			
-			//2: open is the right child:
-			//
+			// 2 situations:
+
+			// 1: open is the left child:
+			// therefore the new open is current open's parent's right child
+
+			// 2: open is the right child:
+			// therefore? -- takes some doing
+
+			// update next available position
+
 		}
 
-		// update next available position
-
-		return null;
 	}
 
 	/**
