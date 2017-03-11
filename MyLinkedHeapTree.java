@@ -1,6 +1,9 @@
 package heap;
 
+import java.util.ArrayDeque;
+
 import net.datastructures.CompleteBinaryTree;
+import net.datastructures.Deque;
 import net.datastructures.EmptyTreeException;
 import net.datastructures.LinkedBinaryTree;
 import net.datastructures.Position;
@@ -23,13 +26,13 @@ import net.datastructures.Position;
 public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements CompleteBinaryTree<E> {
 
 	// instance variables
-	Position open;
+	private ArrayDeque<Position<E>> _positions;
 
 	/**
 	 * Default constructor. The tree begins empty.
 	 */
 	public MyLinkedHeapTree() {
-
+		_positions = new ArrayDeque<Position<E>>();
 	}
 
 	/**
@@ -51,30 +54,34 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 
 		// if tree is empty, create a root position and add element to position
 		if (isEmpty()) {
-			open = addRoot(element);
-			return open;
+			// create new position as root
+			Position<E> root = addRoot(element);
+			// add new position to deque
+			_positions.add(root);
+			// return position
+			return root;
 		}
 
 		// else get position with opening add new position as that position's
 		// child
-		if (!hasLeft(open)) {
-			return insertLeft(open, element);
+
+		Position<E> leftMost = _positions.getFirst();
+		if (!hasLeft(leftMost)) {
+			// if the first element on deque does not have a left child
+			Position<E> leftChild = insertLeft(leftMost, element);
+			// add left position to deque
+			_positions.add(leftChild);
+			return leftChild;
+
 		} else {
-			return insertRight(open, element);
-			// open is now full, need to figure out new open
-
-			// 2 situations:
-
-			// 1: open is the left child:
-			// therefore the new open is current open's parent's right child
-
-			// 2: open is the right child:
-			// therefore? -- takes some doing
-
-			// update next available position
-
+			Position<E> rightChild = insertRight(leftMost, element);
+			// add right position to deque
+			_positions.add(rightChild);
+			// Since now first element is full it should be removed from deque
+			_positions.removeFirst();
+			return rightChild;
 		}
-
+		
 	}
 
 	/**
