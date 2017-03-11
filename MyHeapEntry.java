@@ -3,44 +3,61 @@ package heap;
 import net.datastructures.Entry;
 
 /**
- * Represents a key/value pair to be stored in a data 
- * structure, such as a heap. Entry<K,V> is a very 
- * limited accessing interface, so you may wish to add 
- * additional methods. In particular, think about the 
- * relationship of the Entry<K,V> with its location in 
- * the heap's binary tree. All methods must run in O(1)
- * time.
+ * Represents a key/value pair to be stored in a data structure, such as a heap.
+ * Entry<K,V> is a very limited accessing interface, so you may wish to add
+ * additional methods. In particular, think about the relationship of the
+ * Entry<K,V> with its location in the heap's binary tree. All methods must run
+ * in O(1) time.
  *
- * Feel free to add additional comments. 
+ * Feel free to add additional comments.
  */
 
-public class MyHeapEntry<K,V> implements Entry<K,V> {
+public class MyHeapEntry<K, V> implements Entry<K, V> {
 
-	//TODO
-	//setter and getter on key and value
-	
-	/** 
+	// instance variables
+	K key;
+	V value;
+
+	/**
 	 * Default constructor. You may wish to modify the parameters.
 	 */
-	//TODO modify parameters so key/value are defined at instantiation
-	public MyHeapEntry() {
-
+	// TODO modify parameters so key/value are defined at instantiation
+	public MyHeapEntry(K key, V value) {
+		this.key = key;
+		this.value = value;
 	}
-	
+
 	/**
-	 * @return the key stored in this entry 
+	 * Sets key of entry
+	 * 
+	 * @param key
+	 *            the key to set
+	 */
+	public void setKey(K key) {
+		this.key = key;
+	}
+
+	/**
+	 * Set value of entry
+	 * 
+	 * @param value
+	 *            the value to set
+	 */
+	public void setValue(V value) {
+		this.value = value;
+	}
+
+	/**
+	 * @return the key stored in this entry
 	 */
 	public K getKey() {
 		return null;
 	}
 
-	/** 
-	 * @return the value stored in this entry 
+	/**
+	 * @return the value stored in this entry
 	 */
 	public V getValue() {
 		return null;
 	}
-	
-	/* Add any additional methods here */
-
 }
