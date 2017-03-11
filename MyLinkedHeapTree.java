@@ -49,6 +49,9 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	 *            to be added to the tree as the new last node
 	 * @return the Position of the newly inserted element
 	 */
+	
+	// TODO for testing purposes
+	// when adding an element you have to reorder the tree
 	@Override
 	public Position<E> add(E element) {
 
@@ -83,6 +86,8 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		}
 		
 	}
+	
+	
 
 	/**
 	 * Removes and returns the element stored in the last node of the tree.
@@ -102,5 +107,13 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	/*
 	 * Feel free to add helper methods here. Add helper methods here.
 	 */
+	// TODO write method that reorders tree 
+	
+	public void reorderTree(Position<E> p){
+		// recursively updates the parents 
+		
+		//while node is greater than parent swap elements 
+		
+	}
 
 }
