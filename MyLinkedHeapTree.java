@@ -22,7 +22,7 @@ import net.datastructures.Position;
  * Feel free to add additional comments.
  */
 
-// TODO read
+// TODO readme: include justification for using linear updating while reordering the tree
 public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements CompleteBinaryTree<E> {
 
 	// instance variables
