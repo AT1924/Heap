@@ -21,7 +21,6 @@ public class MyHeapEntry<K, V> implements Entry<K, V> {
 	/**
 	 * Default constructor. You may wish to modify the parameters.
 	 */
-	// TODO modify parameters so key/value are defined at instantiation
 	public MyHeapEntry(K key, V value) {
 		this.key = key;
 		this.value = value;
@@ -51,14 +50,14 @@ public class MyHeapEntry<K, V> implements Entry<K, V> {
 	 * @return the key stored in this entry
 	 */
 	public K getKey() {
-		return null;
+		return key;
 	}
 
 	/**
 	 * @return the value stored in this entry
 	 */
 	public V getValue() {
-		return null;
+		return value;
 	}
 	
 	//helper methods
