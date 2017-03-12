@@ -60,4 +60,22 @@ public class MyLinkedHeapTreeTest {
 	 * TODO: Write your own tests below!
 	 * Think of edge cases for add/remove and try to test your helper methods (if applicable).
 	 */
+	
+	public void testAddElement(){
+		MyLinkedHeapTree<MyHeapEntry> tree = new MyLinkedHeapTree<MyHeapEntry>();
+		MyHeapEntry entry = new MyHeapEntry(1,"ABC");
+		MyHeapEntry entry2 = new MyHeapEntry(2,"DEF");
+		MyHeapEntry entry3 = new MyHeapEntry(10,"GHI");
+		tree.add(entry);
+		tree.add(entry2);
+		tree.add(entry3);
+		
+		
+		assertThat(tree.size(), is(3));
+
+		
+		
+	}
+	
+	
 }

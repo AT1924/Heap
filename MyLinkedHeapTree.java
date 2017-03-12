@@ -110,8 +110,11 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	// TODO write method that reorders tree 
 	
 	public void reorderTree(Position<E> p){
-		// recursively updates the parents 
-		
+		// linearly updates the parents 
+		// if the node that has been added is greater than its parents swap with parent
+		while (_positions.getLast() >= _positions.getLast().parent(_positions.getLast())){
+			
+		}
 		//while node is greater than parent swap elements 
 		
 	}
