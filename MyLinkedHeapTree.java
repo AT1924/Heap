@@ -112,6 +112,11 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	public void reorderTree(Position<E> p){
 		// linearly updates the parents 
 		// if the node that has been added is greater than its parents swap with parent
+		
+//		in a for loop
+		//1: compare child to parent
+		//2: if child is larger than parent, call swap() <- in this class
+		
 //		while (_positions.getLast() >= _positions.getLast().parent(_positions.getLast())){
 //			
 //		}
