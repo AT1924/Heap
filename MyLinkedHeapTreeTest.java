@@ -114,4 +114,28 @@ public class MyLinkedHeapTreeTest {
 		}
 
 	}
+	
+	@Test()
+	public void testReorder(){
+		MyLinkedHeapTree tree = new MyLinkedHeapTree();
+		tree.set_comparator( new IntegerComparator());
+		
+		tree.add(34);
+		tree.add(45);
+		tree.add(47);
+		tree.add(55);
+		tree.add(65);
+		
+		// order of leaves 65, 55, 47, 34, 45
+		int[] list = {45,34,47,55,65};
+		for (int i = 0; i < list.length; i++){
+			assertEquals(list[i], tree.remove());
+		}
+		
+		
+		
+	}
+	
+	
+	
 }
