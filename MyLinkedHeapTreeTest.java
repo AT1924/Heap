@@ -94,6 +94,7 @@ public class MyLinkedHeapTreeTest {
 	 */
 	@Test()
 	public void testMyHeapEntry() {
+		//test
 		MyHeapEntry ent = new MyHeapEntry(1, "the value");
 
 		// test get/set
