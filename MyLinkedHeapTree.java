@@ -1,6 +1,7 @@
 package heap;
 
 import java.util.ArrayDeque;
+import java.util.Comparator;
 
 import net.datastructures.CompleteBinaryTree;
 import net.datastructures.Deque;
@@ -27,12 +28,15 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 
 	// instance variables
 	private ArrayDeque<Position<E>> _positions;
+	private Comparator _comparator;
+	
 
 	/**
 	 * Default constructor. The tree begins empty.
 	 */
 	public MyLinkedHeapTree() {
 		_positions = new ArrayDeque<Position<E>>();
+		
 	}
 
 	/**
@@ -103,6 +107,11 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	public E remove() throws EmptyTreeException {
 		return null;
 	}
+	
+	
+	public void set_comparator(Comparator _comparator) {
+		this._comparator = _comparator;
+	}
 
 	/*
 	 * Feel free to add helper methods here. Add helper methods here.
@@ -113,14 +122,11 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		// linearly updates the parents 
 		// if the node that has been added is greater than its parents swap with parent
 		
-//		in a for loop
-		//1: compare child to parent
-		//2: if child is larger than parent, call swap() <- in this class
+		while (parent(p) != null && _comparator.compare(p,parent(p)) > 0){
+			swapElements(p,parent(p));
+			p = parent(p);
+		}
 		
-//		while (_positions.getLast() >= _positions.getLast().parent(_positions.getLast())){
-//			
-//		}
-		//while node is greater than parent swap elements 
 		
 	}
 

@@ -31,7 +31,8 @@ public class MyHeap<K,V> implements HeapWrapper<K,V>, AdaptablePriorityQueue<K,V
 	 * @param the comparator to be used for heap keys
 	 */
 	public MyHeap(Comparator<K> comparator) {
-		
+		_tree = new MyLinkedHeapTree();
+		_tree.set_comparator(comparator);
 	}
 
 	/**
