@@ -151,7 +151,7 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		// parent
 
 		try {
-			while (parent(p) != null && _comparator.compare(p.element(), parent(p).element()) > 0) {
+			while (!isRoot(p)  && _comparator.compare(p.element(), parent(p).element()) > 0) {
 				swapElements(p, parent(p));
 				p = parent(p);
 			}

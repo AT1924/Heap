@@ -70,6 +70,8 @@ public class MyLinkedHeapTreeTest {
 	public void testAddElement() {
 		// setup
 		MyLinkedHeapTree<MyHeapEntry> tree = new MyLinkedHeapTree<MyHeapEntry>();
+		
+		tree.set_comparator(new MyHeapEntryComparator());
 
 		MyHeapEntry entry1 = new MyHeapEntry(1, "ABC");
 		MyHeapEntry entry2 = new MyHeapEntry(2, "DEF");
@@ -81,9 +83,9 @@ public class MyLinkedHeapTreeTest {
 		Position pos3 = tree.add(entry3);
 
 		// check that positions contain correct entries
-		assertEquals(pos1.element(), entry1);
-		assertEquals(pos2.element(), entry2);
-		assertEquals(pos3.element(), entry3);
+		assertEquals(pos1.element(), entry3);
+		assertEquals(pos2.element(), entry1);
+		assertEquals(pos3.element(), entry2);
 
 		// check size
 		assertThat(tree.size(), is(3));
@@ -138,6 +140,7 @@ public class MyLinkedHeapTreeTest {
 	@Test()
 	public void testRemove(){
 		MyLinkedHeapTree tree = new MyLinkedHeapTree();
+		tree.set_comparator(new IntegerComparator());
 		
 		tree.add(24);
 		tree.add(16);

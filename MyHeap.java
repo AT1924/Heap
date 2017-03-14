@@ -43,6 +43,7 @@ public class MyHeap<K,V> implements HeapWrapper<K,V>, AdaptablePriorityQueue<K,V
 	 * @throws IllegalStateException if priority queue is not empty
 	 * @throws IllegalArgumentException if null comparator is passed in
 	 */
+	//TODO need to update comparator 
 	public void setComparator(Comparator<K> comparator)
 			throws IllegalStateException, IllegalArgumentException {
 
