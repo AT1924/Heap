@@ -3,6 +3,7 @@ package heap;
 import java.util.ArrayDeque;
 import java.util.Comparator;
 
+import net.datastructures.BoundaryViolationException;
 import net.datastructures.CompleteBinaryTree;
 import net.datastructures.Deque;
 import net.datastructures.EmptyTreeException;
@@ -23,20 +24,20 @@ import net.datastructures.Position;
  * Feel free to add additional comments.
  */
 
-// TODO readme: include justification for using linear updating while reordering the tree
+// TODO readme: include justification for using linear updating while reordering
+// the tree
 public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements CompleteBinaryTree<E> {
 
 	// instance variables
 	private ArrayDeque<Position<E>> _positions;
 	private Comparator _comparator;
-	
 
 	/**
 	 * Default constructor. The tree begins empty.
 	 */
 	public MyLinkedHeapTree() {
 		_positions = new ArrayDeque<Position<E>>();
-		
+
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	 *            to be added to the tree as the new last node
 	 * @return the Position of the newly inserted element
 	 */
-	
+
 	// TODO for testing purposes
 	// when adding an element you have to reorder the tree
 	@Override
@@ -78,6 +79,7 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 			Position<E> leftChild = insertLeft(leftMost, element);
 			// add left position to deque
 			_positions.add(leftChild);
+			reorderTree(leftChild);
 			return leftChild;
 
 		} else {
@@ -86,12 +88,12 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 			_positions.add(rightChild);
 			// Since now first element is full it should be removed from deque
 			_positions.removeFirst();
+			reorderTree(rightChild);
 			return rightChild;
+
 		}
-		
+
 	}
-	
-	
 
 	/**
 	 * Removes and returns the element stored in the last node of the tree.
@@ -105,10 +107,35 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	 */
 	@Override
 	public E remove() throws EmptyTreeException {
-		return null;
+
+		if (isEmpty()) {
+			throw new EmptyTreeException("You can not remove when the tree is empty");
+		}
+
+		Position<E> child = _positions.peekLast();
+		if (isRoot(child)){
+			_positions.removeLast();
+			return remove(child);
+			
+
+		}
+		Position<E> parent = parent(child);
+		
+		
+		if (hasLeft(parent) && left(parent) == child) {
+			_positions.removeLast();
+			remove(child);
+
+		}
+
+		if (hasRight(parent) && right(parent) == child) {
+			_positions.removeLast();
+			_positions.addFirst(parent(child));
+			remove(child);
+		}
+		return child.element();
 	}
-	
-	
+
 	public void set_comparator(Comparator _comparator) {
 		this._comparator = _comparator;
 	}
@@ -116,18 +143,21 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	/*
 	 * Feel free to add helper methods here. Add helper methods here.
 	 */
-	// TODO write method that reorders tree 
-	
-	public void reorderTree(Position<E> p){
-		// linearly updates the parents 
-		// if the node that has been added is greater than its parents swap with parent
-		
-		while (parent(p) != null && _comparator.compare(p,parent(p)) > 0){
-			swapElements(p,parent(p));
-			p = parent(p);
+	// TODO write method that reorders tree
+
+	public void reorderTree(Position<E> p) {
+		// linearly updates the parents
+		// if the node that has been added is greater than its parents swap with
+		// parent
+
+		try {
+			while (parent(p) != null && _comparator.compare(p.element(), parent(p).element()) > 0) {
+				swapElements(p, parent(p));
+				p = parent(p);
+			}
+		} catch (BoundaryViolationException e) {
 		}
-		
-		
+
 	}
 
 }

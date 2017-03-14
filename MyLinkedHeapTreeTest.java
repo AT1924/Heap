@@ -127,13 +127,21 @@ public class MyLinkedHeapTreeTest {
 		tree.add(65);
 		
 		// order of leaves 65, 55, 47, 34, 45
-		int[] list = {45,34,47,55,65};
+		int[] list = {47,34,45,55,65};
 		for (int i = 0; i < list.length; i++){
 			assertEquals(list[i], tree.remove());
 		}
 		
 		
 		
+	}
+	@Test()
+	public void testRemove(){
+		MyLinkedHeapTree tree = new MyLinkedHeapTree();
+		
+		tree.add(24);
+		tree.add(16);
+		assertEquals(16, tree.remove());
 	}
 	
 	
