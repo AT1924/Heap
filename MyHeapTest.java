@@ -3,6 +3,7 @@ package heap;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +11,8 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+
+import net.datastructures.Entry;
 
 /**
  * This class can be used to test the functionality of your MyHeap implementation.
@@ -118,4 +121,30 @@ public class MyHeapTest {
 	 * Think of edge cases and testing for exceptions (if applicable) for insert, remove, min, removeMin, size and
 	 * your helper methods (if applicable).
 	 */
+	
+	@Test()
+	public void testInsert(){
+		MyHeapEntryComparator<MyHeapEntry> comparator = new MyHeapEntryComparator<MyHeapEntry>();
+		MyHeap<Integer, String> heap = new MyHeap<Integer, String>(comparator);
+		
+		Entry<Integer, String> entry1 = heap.insert(11, "A");
+		Entry<Integer, String> entry2 = heap.insert(13, "B");
+		Entry<Integer, String> entry3 = heap.insert(64, "C");
+		Entry<Integer, String> entry4 = heap.insert(16, "D");
+		Entry<Integer, String> entry5 = heap.insert(44, "E");
+		
+		assertEquals((int) entry1.getKey(),11);
+		assertEquals((int) entry2.getKey(),13);
+		assertEquals((int) entry3.getKey(),64);
+		assertEquals((int) entry4.getKey(),16);
+		assertEquals((int) entry5.getKey(),44);
+		
+		assertEquals(entry1.getValue(),"A");
+		assertEquals(entry2.getValue(),"B");
+		assertEquals(entry3.getValue(),"C");
+		assertEquals(entry4.getValue(),"D");
+		assertEquals(entry5.getValue(),"E");
+	}
+	
+	
 }

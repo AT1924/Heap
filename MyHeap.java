@@ -118,8 +118,9 @@ public class MyHeap<K,V> implements HeapWrapper<K,V>, AdaptablePriorityQueue<K,V
 	 * @throws InvalidKeyException if the key is not suitable for this heap
 	 */
 	public Entry<K,V> insert(K key, V value) throws InvalidKeyException {
-		//MyHeapEntry entry = new MyHeapEntry<key,value>();
-		return null;
+		MyHeapEntry entry = new MyHeapEntry<K,V>(key, value);
+		return (Entry<K, V>) _tree.add(entry).element();
+		
 	}
 
 	/** 
