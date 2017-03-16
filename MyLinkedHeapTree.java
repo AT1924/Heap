@@ -3,6 +3,7 @@ package heap;
 import java.util.ArrayDeque;
 import java.util.Comparator;
 
+import javafx.scene.control.TableView.ResizeFeatures;
 import net.datastructures.BoundaryViolationException;
 import net.datastructures.CompleteBinaryTree;
 import net.datastructures.Deque;
@@ -56,9 +57,9 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	 */
 
 	// TODO for testing purposes
-	
+
 	// when adding an element you have to reorder the tree
-	
+
 	@Override
 	public Position<E> add(E element) {
 
@@ -76,19 +77,17 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		Position<E> leftMost = _positions.getFirst();
 		if (!hasLeft(leftMost)) {
 			// if the first element on deque does not have a left child
-			
+
 			// add left position to deque
 			_positions.add(insertLeft(leftMost, element));
-			reorderTree(_positions.peekLast());
-			return _positions.peekLast();
+			return reorderTree(_positions.peekLast());
 
 		} else {
 			// add right position to deque
 			_positions.add(insertRight(leftMost, element));
 			// Since now first element is full it should be removed from deque
 			_positions.removeFirst();
-			reorderTree(_positions.peekLast());
-			return _positions.peekLast();
+			return reorderTree(_positions.peekLast());
 
 		}
 
@@ -112,15 +111,13 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		}
 
 		Position<E> child = _positions.peekLast();
-		if (isRoot(child)){
+		if (isRoot(child)) {
 			_positions.removeLast();
 			return remove(child);
-			
 
 		}
 		Position<E> parent = parent(child);
-		
-		
+
 		if (hasLeft(parent) && left(parent) == child) {
 			_positions.removeLast();
 			remove(child);
@@ -144,18 +141,23 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	 */
 	// TODO write method that reorders tree
 
-	public void reorderTree(Position<E> p) {
+	public Position<E> reorderTree(Position<E> p) {
 		// linearly updates the parents
 		// if the node that has been added is greater than its parents swap with
 		// parent
-
+		// test
+		Position<E> restingPosition = p;
 		try {
-			while (!isRoot(p)  && _comparator.compare(p.element(), parent(p).element()) > 0) {
+			while (!isRoot(p) && _comparator.compare(p.element(), parent(p).element()) > 0) {
 				swapElements(p, parent(p));
 				p = parent(p);
+				restingPosition = p;
+
 			}
 		} catch (BoundaryViolationException e) {
+
 		}
+		return restingPosition;
 
 	}
 

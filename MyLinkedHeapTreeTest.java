@@ -84,8 +84,8 @@ public class MyLinkedHeapTreeTest {
 
 		// check that positions contain correct entries
 		assertEquals(pos1.element(), entry3);
-		assertEquals(pos2.element(), entry1);
-		assertEquals(pos3.element(), entry2);
+		assertEquals(pos2.element(), entry3);
+		assertEquals(pos3.element(), entry3);
 
 		// check size
 		assertThat(tree.size(), is(3));
@@ -122,17 +122,19 @@ public class MyLinkedHeapTreeTest {
 		MyLinkedHeapTree tree = new MyLinkedHeapTree();
 		tree.set_comparator( new IntegerComparator());
 		
-		tree.add(34);
-		tree.add(45);
-		tree.add(47);
-		tree.add(55);
-		tree.add(65);
+		// test that we are returning the appropriate position
+		assertEquals(34, tree.add(34).element());
+		assertEquals(45, tree.add(45).element());
+		assertEquals(47, tree.add(47).element());
+		assertEquals(55,tree.add(55).element());
+		assertEquals(65,tree.add(65).element());
 		
 		// order of leaves 65, 55, 47, 34, 45
 		int[] list = {47,34,45,55,65};
 		for (int i = 0; i < list.length; i++){
 			assertEquals(list[i], tree.remove());
 		}
+		
 		
 		
 		
