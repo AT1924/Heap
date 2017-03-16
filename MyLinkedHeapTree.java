@@ -56,18 +56,18 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	 */
 
 	// TODO for testing purposes
+	
 	// when adding an element you have to reorder the tree
+	
 	@Override
 	public Position<E> add(E element) {
 
 		// if tree is empty, create a root position and add element to position
 		if (isEmpty()) {
 			// create new position as root
-			Position<E> root = addRoot(element);
 			// add new position to deque
-			_positions.add(root);
-			// return position
-			return root;
+			_positions.add(addRoot(element));
+			return _positions.peekLast();
 		}
 
 		// else get position with opening add new position as that position's
@@ -76,20 +76,19 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		Position<E> leftMost = _positions.getFirst();
 		if (!hasLeft(leftMost)) {
 			// if the first element on deque does not have a left child
-			Position<E> leftChild = insertLeft(leftMost, element);
+			
 			// add left position to deque
-			_positions.add(leftChild);
-			reorderTree(leftChild);
-			return leftChild;
+			_positions.add(insertLeft(leftMost, element));
+			reorderTree(_positions.peekLast());
+			return _positions.peekLast();
 
 		} else {
-			Position<E> rightChild = insertRight(leftMost, element);
 			// add right position to deque
-			_positions.add(rightChild);
+			_positions.add(insertRight(leftMost, element));
 			// Since now first element is full it should be removed from deque
 			_positions.removeFirst();
-			reorderTree(rightChild);
-			return rightChild;
+			reorderTree(_positions.peekLast());
+			return _positions.peekLast();
 
 		}
 

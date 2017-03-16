@@ -72,7 +72,9 @@ public class MyHeap<K,V> implements HeapWrapper<K,V>, AdaptablePriorityQueue<K,V
 	 * @return an int representing the number of entries stored
 	 */
 	public int size() {
-		return 0;
+		// does this run in O(1) time?
+		return _tree.size();
+		
 	}
 
 	/** 
@@ -81,8 +83,13 @@ public class MyHeap<K,V> implements HeapWrapper<K,V>, AdaptablePriorityQueue<K,V
 	 * 
 	 * @return true if the heap is empty; false otherwise
 	 */
-	public boolean isEmpty() {
-		return true;
+	public boolean isEmpty() {  
+		if (_tree.isEmpty()){
+			return true;
+		}
+		else{
+			return false;
+		}
 	}
 
 	/** 
@@ -93,6 +100,11 @@ public class MyHeap<K,V> implements HeapWrapper<K,V>, AdaptablePriorityQueue<K,V
 	 * @throws EmptyPriorityQueueException if the heap is empty
 	 */
 	public Entry<K,V> min() throws EmptyPriorityQueueException {
+		// make sure to cache minimum and make sure to update and remove a node 
+		// keep an arrayList of entries 
+		if (isEmpty()){
+			throw new EmptyPriorityQueueException("Cannot get entry as heap is empty");
+		}
 		return null;
 	}
 
