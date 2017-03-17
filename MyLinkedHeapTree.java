@@ -148,7 +148,7 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		// test
 		Position<E> restingPosition = p;
 		try {
-			while (!isRoot(p) && _comparator.compare(p.element(), parent(p).element()) > 0) {
+			while (!isRoot(p) && _comparator.compare(p.element(), parent(p).element()) < 0) {
 				swapElements(p, parent(p));
 				p = parent(p);
 				restingPosition = p;
