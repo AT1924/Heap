@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -158,9 +159,26 @@ public class MyHeapTest {
 	}
 		
 		
-		
-		
+	@Test()
+	public void testsize() {
+		MyHeap<Integer, String> heap = new MyHeap<Integer, String>(new IntegerComparator());
+		assertEquals(0,heap.size());
+		Entry<Integer, String> entry = heap.insert(1, "A");
+		assertEquals(1,heap.size());
+		heap.remove(entry);
+		assertEquals(0,heap.size());
+	}
+	
+	
+	@Test()
+	public void testisEmpty() {
+		MyHeap<Integer, String> heap = new MyHeap<Integer, String>(new IntegerComparator());
+		assert(heap.isEmpty());
+		Entry<Integer, String> entry = heap.insert(1, "A");
+		assertFalse(heap.isEmpty());
+		heap.remove(entry);
+		assert(heap.isEmpty());
+	}
 }
-	
-	
+		
 
