@@ -124,8 +124,8 @@ public class MyHeapTest {
 	
 	@Test()
 	public void testInsert(){
-		MyHeapEntryComparator<MyHeapEntry> comparator = new MyHeapEntryComparator<MyHeapEntry>();
-		MyHeap<Integer, String> heap = new MyHeap<Integer, String>(comparator);
+		MyHeapEntryComparator comparator = new MyHeapEntryComparator();
+		MyHeap heap = new MyHeap(comparator);
 		
 		Entry<Integer, String> entry1 = heap.insert(11, "A");
 		Entry<Integer, String> entry2 = heap.insert(13, "B");
@@ -147,4 +147,20 @@ public class MyHeapTest {
 	}
 	
 	
+	/*
+	 * Here, we're checking to see if an IllegalArgumentException is being correctly thrown after we try to
+	 * call setComparator while passing in null.
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetComparatorThrowsIllegalArgumentException() {
+		MyHeap<Integer, String> heap = new MyHeap<Integer, String>(new IntegerComparator());
+		heap.setComparator(null);
+	}
+		
+		
+		
+		
 }
+	
+	
+
