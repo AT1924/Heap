@@ -132,7 +132,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		MyHeapEntry entry = new MyHeapEntry<K, V>(key, value);
 		entry.set_position(_tree.add(entry));
 		return entry;
-		
 
 	}
 
@@ -160,34 +159,21 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 */
 	public Entry<K, V> remove(Entry<K, V> entry) throws InvalidEntryException {
 		MyHeapEntry<K, V> checkedEntry = this.checkAndConvertEntry(entry);
-		
-		if (isEmpty()){
-			throw new InvalidEntryException("Tree is empty and thus entry cannot be removed");
+
+		if (isEmpty() || checkedEntry.get_position() == null) {
+			throw new InvalidEntryException("entry not in tree");
 		}
-		 	
-		
+
+		// swap with the last position
 		Position<MyHeapEntry<K, V>> lastPosition = _tree.getLastPosition();
 		Position<MyHeapEntry<K, V>> checkedPosition = checkedEntry.get_position();
 		_tree.swapElements(lastPosition, checkedPosition);
-		if (_tree.hasRight(checkedPosition)){
-			// if right child is larger than left child
-			MyHeapEntry<K, V> leftChild = _tree.left(checkedPosition).element();
-			MyHeapEntry<K, V> rightChild = _tree.right(checkedPosition).element();
-			if (_comparator.compare(leftChild, rightChild) > 0){
-				
-			}
-		}
-		
-		// delete from tree and capture entry
-		
-		MyHeapEntry lastEntry = _tree.remove();
-		// swap with the last position
-		
-		// reorder swapped position
-		
-		 
 
-		return null;
+		// sort down
+		downSort(checkedPosition);
+
+		// delete from tree and return entry
+		_tree.remove();
 	}
 
 	/**
@@ -257,4 +243,49 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 * helps segment your code, makes it easier to understand, and avoids
 	 * problems in keeping each occurrence "up-to-date."
 	 */
+
+	// TODO -- upsort as well
+	/**
+	 * Reorder a position with respect to it's children. Walk down the tree,
+	 * swapping with any child node that has a smaller key.
+	 * 
+	 * @param position
+	 *            a (hopefully) freshly swapped position
+	 */
+	public void downSort(Position<MyHeapEntry<K, V>> position) {
+
+		Boolean hasLargerChild = true;
+		while (hasLargerChild) {
+			// no children left
+			if (!_tree.hasLeft(position)) {
+				break;
+			}
+
+			// 2 children
+			if (_tree.hasRight(position)) {
+				// get smaller child
+				MyHeapEntry<K, V> leftChild = _tree.left(position).element();
+				MyHeapEntry<K, V> rightChild = _tree.right(position).element();
+				MyHeapEntry<K, V> smallerChild = rightChild;
+				if (_comparator.compare(leftChild.getKey(), rightChild.getKey()) < 0) {
+					smallerChild = leftChild;
+				}
+				
+				// attempt to swap child
+				if (_comparator.compare(position.element().getKey(), smallerChild.getKey()) > 0) {
+					//swap elements
+					_tree.swapElements(position, smallerChild);
+					
+					//new position to check is old position of smaller child
+				}
+				else{
+					hasLargerChild = false;
+				}
+				
+
+			}
+		}
+
+	}
+
 }

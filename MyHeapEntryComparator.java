@@ -4,8 +4,11 @@ import java.util.Comparator;
 
 /**
  * Implements the Comparator interface to compare two given MyHeapentries
+ * 
+ * @param <K>
+ * @param <V>
  */
-public class MyHeapEntryComparator implements Comparator<MyHeapEntry> {
+public class MyHeapEntryComparator<K> implements Comparator<K> {
 
 	/**
 	 * Returns a negative number, zero, or a positive number if the first
@@ -13,8 +16,7 @@ public class MyHeapEntryComparator implements Comparator<MyHeapEntry> {
 	 * respectively.
 	 */
 	@Override
-	public int compare(MyHeapEntry e1, MyHeapEntry e2) {
-		return (int) e1.getKey() - (int) e2.getKey();
+	public int compare(K o1, K o2) {
+		return (int) 01 - (int) 02;
 	}
-
 }
