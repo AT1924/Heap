@@ -152,7 +152,6 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 				swapElements(p, parent(p));
 				p = parent(p);
 				restingPosition = p;
-
 			}
 		} catch (BoundaryViolationException e) {
 

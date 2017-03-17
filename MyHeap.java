@@ -156,8 +156,13 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 */
 	public Entry<K, V> remove(Entry<K, V> entry) throws InvalidEntryException {
 		MyHeapEntry<K, V> checkedEntry = this.checkAndConvertEntry(entry);
-
-		// continue here ...
+		
+		if (isEmpty()){
+			throw new InvalidEntryException("Tree is empty and thus entry cannot be removed");
+		}
+		 
+		remove(entry);
+		//_tree.remove(entry);
 
 		return null;
 	}
