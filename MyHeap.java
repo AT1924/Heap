@@ -23,6 +23,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 
 	// This the underlying data structure of your heap
 	private MyLinkedHeapTree<MyHeapEntry<K, V>> _tree;
+	private Comparator<K> _comparator;
 
 	/**
 	 * Creates an empty heap with the given comparator.
@@ -33,6 +34,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	public MyHeap(Comparator<K> comparator) {
 		_tree = new MyLinkedHeapTree();
 		_tree.set_comparator(comparator);
+		_comparator = comparator;
 	}
 
 	/**
@@ -128,7 +130,9 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 */
 	public Entry<K, V> insert(K key, V value) throws InvalidKeyException {
 		MyHeapEntry entry = new MyHeapEntry<K, V>(key, value);
-		return (Entry<K, V>) _tree.add(entry).element();
+		entry.set_position(_tree.add(entry));
+		return entry;
+		
 
 	}
 
@@ -160,9 +164,28 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		if (isEmpty()){
 			throw new InvalidEntryException("Tree is empty and thus entry cannot be removed");
 		}
+		 	
+		
+		Position<MyHeapEntry<K, V>> lastPosition = _tree.getLastPosition();
+		Position<MyHeapEntry<K, V>> checkedPosition = checkedEntry.get_position();
+		_tree.swapElements(lastPosition, checkedPosition);
+		if (_tree.hasRight(checkedPosition)){
+			// if right child is larger than left child
+			MyHeapEntry<K, V> leftChild = _tree.left(checkedPosition).element();
+			MyHeapEntry<K, V> rightChild = _tree.right(checkedPosition).element();
+			if (_comparator.compare(leftChild, rightChild) > 0){
+				
+			}
+		}
+		
+		// delete from tree and capture entry
+		
+		MyHeapEntry lastEntry = _tree.remove();
+		// swap with the last position
+		
+		// reorder swapped position
+		
 		 
-		remove(entry);
-		//_tree.remove(entry);
 
 		return null;
 	}

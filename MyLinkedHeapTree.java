@@ -159,5 +159,9 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		return restingPosition;
 
 	}
+	
+	public Position<E> getLastPosition(){
+		return _positions.peekLast();
+	}
 
 }

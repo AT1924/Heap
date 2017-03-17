@@ -1,6 +1,7 @@
 package heap;
 
 import net.datastructures.Entry;
+import net.datastructures.Position;
 
 /**
  * Represents a key/value pair to be stored in a data structure, such as a heap.
@@ -17,6 +18,9 @@ public class MyHeapEntry<K, V> implements Entry<K, V> {
 	// instance variables
 	K key;
 	V value;
+	Position<MyHeapEntry<K, V>> _position;
+
+	
 
 	/**
 	 * Default constructor. You may wish to modify the parameters.
@@ -24,6 +28,7 @@ public class MyHeapEntry<K, V> implements Entry<K, V> {
 	public MyHeapEntry(K key, V value) {
 		this.key = key;
 		this.value = value;
+		
 	}
 
 	/**
@@ -61,4 +66,12 @@ public class MyHeapEntry<K, V> implements Entry<K, V> {
 	}
 	
 	//helper methods
+	
+	public Position<MyHeapEntry<K,V>> get_position() {
+		return _position;
+	}
+	
+	public void set_position(Position<MyHeapEntry<K, V>> position) {
+		this._position = position;
+	}
 }
