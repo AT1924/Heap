@@ -125,8 +125,7 @@ public class MyHeapTest {
 	
 	@Test()
 	public void testInsert(){
-		MyHeapEntryComparator comparator = new MyHeapEntryComparator();
-		MyHeap heap = new MyHeap(comparator);
+		MyHeap heap = new MyHeap(new IntegerComparator());
 		
 		Entry<Integer, String> entry1 = heap.insert(11, "A");
 		Entry<Integer, String> entry2 = heap.insert(13, "B");

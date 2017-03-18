@@ -70,8 +70,8 @@ public class MyLinkedHeapTreeTest {
 	public void testAddElement() {
 		// setup
 		MyLinkedHeapTree<MyHeapEntry> tree = new MyLinkedHeapTree<MyHeapEntry>();
-		
-		tree.set_comparator(new MyHeapEntryComparator());
+	
+		tree.set_comparator(new IntegerComparator());
 
 		MyHeapEntry entry1 = new MyHeapEntry(1, "ABC");
 		MyHeapEntry entry2 = new MyHeapEntry(2, "DEF");
