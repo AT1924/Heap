@@ -169,11 +169,13 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 			throw new InvalidEntryException("entry not in tree");
 		}
 
+		// prune last
+		MyHeapEntry<K, V> last = _tree.remove();
+
 		// swap with the last position
 		Position<MyHeapEntry<K, V>> lastPosition = _tree.getLastPosition();
 		Position<MyHeapEntry<K, V>> checkedPosition = checkedEntry.get_position();
-		_tree.swapElements(lastPosition, checkedPosition);
-		swapElementPositions(lastPosition, checkedPosition);
+		swapElementsAndPositions(lastPosition, checkedPosition);
 
 		// sort down
 		downSort(checkedPosition);
@@ -181,8 +183,8 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		// up sort?
 		reorderTree(checkedPosition);
 
-		// delete from tree and return entry
-		return _tree.remove();
+		return last;
+		// return _tree.remove();
 	}
 
 	/**
@@ -279,8 +281,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 			// attempt to swap child
 			if (_comparator.compare(position.element().getKey(), smallerPosition.element().getKey()) > 0) {
 				// swap elements
-				_tree.swapElements(position, smallerPosition);
-				swapElementPositions(position, smallerPosition);
+				swapElementsAndPositions(position, smallerPosition);
 				// new position to check is old position of smaller child
 				position = smallerPosition;
 			} else {
@@ -301,8 +302,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		try {
 			while (!_tree.isRoot(p)
 					&& _comparator.compare(p.element().getKey(), _tree.parent(p).element().getKey()) < 0) {
-				_tree.swapElements(p, _tree.parent(p));
-				swapElementPositions(p, _tree.parent(p));
+				swapElementsAndPositions(p, _tree.parent(p));
 				p = _tree.parent(p);
 				restingPosition = p;
 			}
@@ -312,14 +312,27 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		return restingPosition;
 	}
 
-	public void swapElementPositions(Position<MyHeapEntry<K, V>> firstPos, Position<MyHeapEntry<K, V>> secondPos) {
-		 Position<MyHeapEntry<K, V>> swapped1 = firstPos;
-		// firstPos.element().set_position(secondPos);
-		// secondPos.element().set_position(swapped1);
-		MyHeapEntry e1 = firstPos.element();
-		MyHeapEntry e2 = secondPos.element();
-		e1.set_position(secondPos);
-		e2.set_position(firstPos);
-		int x = 0;
+	/**
+	 * Swaps the elements of two positions and updates the position inside each
+	 * element
+	 * 
+	 * @param firstPos
+	 *            A tree position
+	 * @param secondPos
+	 *            Another tree position
+	 * 
+	 */
+	public void swapElementsAndPositions(Position<MyHeapEntry<K, V>> firstPos, Position<MyHeapEntry<K, V>> secondPos) {
+		// update position in elements
+		MyHeapEntry<K, V> first = firstPos.element();
+		MyHeapEntry<K, V> second = secondPos.element();
+
+		// swap elements
+		_tree.swapElements(firstPos, secondPos);
+
+		// correct positions
+		first.set_position(secondPos);
+		second.set_position(firstPos);
+		System.out.print("");
 	}
 }
