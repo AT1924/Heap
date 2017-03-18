@@ -171,9 +171,12 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 
 		// sort down
 		downSort(checkedPosition);
+	
+		// up sort?
+		_tree.reorderTree(checkedPosition);
 
 		// delete from tree and return entry
-		_tree.remove();
+		return _tree.remove();
 	}
 
 	/**
@@ -253,39 +256,32 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *            a (hopefully) freshly swapped position
 	 */
 	public void downSort(Position<MyHeapEntry<K, V>> position) {
-
-		Boolean hasLargerChild = true;
-		while (hasLargerChild) {
+		Boolean possibleLargerChild = true;
+		while (possibleLargerChild) {
 			// no children left
 			if (!_tree.hasLeft(position)) {
 				break;
 			}
 
-			// 2 children
-			if (_tree.hasRight(position)) {
-				// get smaller child
-				MyHeapEntry<K, V> leftChild = _tree.left(position).element();
-				MyHeapEntry<K, V> rightChild = _tree.right(position).element();
-				MyHeapEntry<K, V> smallerChild = rightChild;
-				if (_comparator.compare(leftChild.getKey(), rightChild.getKey()) < 0) {
-					smallerChild = leftChild;
-				}
-				
-				// attempt to swap child
-				if (_comparator.compare(position.element().getKey(), smallerChild.getKey()) > 0) {
-					//swap elements
-					_tree.swapElements(position, smallerChild);
-					
-					//new position to check is old position of smaller child
-				}
-				else{
-					hasLargerChild = false;
-				}
-				
+			// has children
+			Position<MyHeapEntry<K, V>> smallerPosition;
+			if (_tree.hasRight(position) && (_comparator.compare(_tree.right(position).element().getKey(),
+					_tree.right(position).element().getKey()) < 0)) {
+				smallerPosition = _tree.right(position);
+			} else {
+				smallerPosition = _tree.left(position);
+			}
 
+			// attempt to swap child
+			if (_comparator.compare(position.element().getKey(), smallerPosition.element().getKey()) > 0) {
+				// swap elements
+				_tree.swapElements(position, smallerPosition);
+				// new position to check is old position of smaller child
+				position = smallerPosition;
+			} else {
+				possibleLargerChild = false;
 			}
 		}
-
 	}
 
 }

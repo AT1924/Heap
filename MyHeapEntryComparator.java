@@ -17,6 +17,6 @@ public class MyHeapEntryComparator<K> implements Comparator<K> {
 	 */
 	@Override
 	public int compare(K o1, K o2) {
-		return (int) 01 - (int) 02;
+		return (int) o1 - (int) o2;
 	}
 }
