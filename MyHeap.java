@@ -312,9 +312,13 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	}
 
 	public void swapElementPositions(Position<MyHeapEntry<K, V>> firstPos, Position<MyHeapEntry<K, V>> secondPos) {
-		Position<MyHeapEntry<K, V>> swapped1 = firstPos.element().get_position();
-		firstPos.element().set_position(secondPos);
-		secondPos.element().set_position(swapped1);
-
+//		Position<MyHeapEntry<K, V>> swapped1 = firstPos;
+//		firstPos.element().set_position(secondPos);
+//		secondPos.element().set_position(swapped1);
+		MyHeapEntry e1 = firstPos.element();
+		MyHeapEntry e2 = secondPos.element();
+		e1.set_position(secondPos);
+		e2.set_position(firstPos);
+		int x = 0;
 	}
 }
