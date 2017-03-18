@@ -9,6 +9,7 @@ import net.datastructures.InvalidEntryException;
 import net.datastructures.InvalidKeyException;
 import net.datastructures.Position;
 import net.datastructures.AdaptablePriorityQueue;
+import net.datastructures.BoundaryViolationException;
 import support.heap.HeapWrapper;
 
 /**
@@ -129,10 +130,10 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the key is not suitable for this heap
 	 */
 	public Entry<K, V> insert(K key, V value) throws InvalidKeyException {
-		MyHeapEntry entry = new MyHeapEntry<K, V>(key, value);
+		MyHeapEntry<K, V> entry = new MyHeapEntry<K, V>(key, value);
 		entry.set_position(_tree.add(entry));
+		reorderTree(entry.get_position());
 		return entry;
-
 	}
 
 	/**
@@ -171,7 +172,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 
 		// sort down
 		downSort(checkedPosition);
-	
+
 		// up sort?
 		_tree.reorderTree(checkedPosition);
 
@@ -284,4 +285,25 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		}
 	}
 
+	/*
+	 * reorders tree when element is inserted
+	 */
+	public Position<MyHeapEntry<K, V>> reorderTree(Position<MyHeapEntry<K, V>> p) {
+		// linearly updates the parents
+		// if the node that has been added is greater than its parents swap with
+		// parent
+		// test
+		Position<MyHeapEntry<K, V>> restingPosition = p;
+		try {
+			while (!_tree.isRoot(p)
+					&& _comparator.compare(p.element().getKey(), _tree.parent(p).element().getKey()) < 0) {
+				_tree.swapElements(p, _tree.parent(p));
+				p = _tree.parent(p);
+				restingPosition = p;
+			}
+		} catch (BoundaryViolationException e) {
+
+		}
+		return restingPosition;
+	}
 }

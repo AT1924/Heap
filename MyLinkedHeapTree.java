@@ -80,14 +80,14 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 
 			// add left position to deque
 			_positions.add(insertLeft(leftMost, element));
-			return reorderTree(_positions.peekLast());
+			return _positions.peekLast();
 
 		} else {
 			// add right position to deque
 			_positions.add(insertRight(leftMost, element));
 			// Since now first element is full it should be removed from deque
 			_positions.removeFirst();
-			return reorderTree(_positions.peekLast());
+			return _positions.peekLast();
 
 		}
 
@@ -139,28 +139,7 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	/*
 	 * Feel free to add helper methods here. Add helper methods here.
 	 */
-	// TODO write method that reorders tree
-
-	public Position<E> reorderTree(Position<E> p) {
-		// linearly updates the parents
-		// if the node that has been added is greater than its parents swap with
-		// parent
-		// test
-		Position<E> restingPosition = p;
-		try {
-			while (!isRoot(p) && _comparator.compare(p.element(), parent(p).element()) < 0) {
-				swapElements(p, parent(p));
-				p = parent(p);
-				restingPosition = p;
-			}
-		} catch (BoundaryViolationException e) {
-
-		}
-		return restingPosition;
-
-	}
-	
-	public Position<E> getLastPosition(){
+	public Position<E> getLastPosition() {
 		return _positions.peekLast();
 	}
 
