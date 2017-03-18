@@ -270,7 +270,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 			// has children
 			Position<MyHeapEntry<K, V>> smallerPosition;
 			if (_tree.hasRight(position) && (_comparator.compare(_tree.right(position).element().getKey(),
-					_tree.right(position).element().getKey()) < 0)) {
+					_tree.left(position).element().getKey()) < 0)) {
 				smallerPosition = _tree.right(position);
 			} else {
 				smallerPosition = _tree.left(position);
