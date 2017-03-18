@@ -70,7 +70,7 @@ public class MyLinkedHeapTreeTest {
 	public void testAddElement() {
 		// setup
 		MyLinkedHeapTree<MyHeapEntry> tree = new MyLinkedHeapTree<MyHeapEntry>();
-	
+
 		tree.set_comparator(new IntegerComparator());
 
 		MyHeapEntry entry1 = new MyHeapEntry(1, "ABC");
@@ -96,7 +96,7 @@ public class MyLinkedHeapTreeTest {
 	 */
 	@Test()
 	public void testMyHeapEntry() {
-		//test
+		// test
 		MyHeapEntry ent = new MyHeapEntry(1, "the value");
 
 		// test get/set
@@ -116,40 +116,36 @@ public class MyLinkedHeapTreeTest {
 		}
 
 	}
-	
+
 	@Test()
-	public void testReorder(){
+	public void testReorder() {
 		MyLinkedHeapTree tree = new MyLinkedHeapTree();
-		tree.set_comparator( new IntegerComparator());
-		
+		tree.set_comparator(new IntegerComparator());
+
 		// test that we are returning the appropriate position
 		assertEquals(65, tree.add(65).element());
 		assertEquals(55, tree.add(55).element());
 		assertEquals(47, tree.add(47).element());
-		assertEquals(45,tree.add(45).element());
-		assertEquals(34,tree.add(34).element());
-		
+		assertEquals(45, tree.add(45).element());
+		assertEquals(34, tree.add(34).element());
+
 		// order of leaves 65, 55, 47, 34, 45
-		int[] list = {47,65,55,45,34};
-		for (int i = 0; i < list.length; i++){
+		int[] list = { 47, 65, 55, 45, 34 };
+		for (int i = 0; i < list.length; i++) {
 			assertEquals(list[i], tree.remove());
 		}
-		
-		
-		
-		
+
 	}
+
 	@Test()
-	public void testRemove(){
+	public void testRemove() {
 		MyLinkedHeapTree tree = new MyLinkedHeapTree();
 		tree.set_comparator(new IntegerComparator());
-		
+
 		tree.add(24);
 		tree.add(16);
 		assertEquals(24, tree.remove());
 		assertEquals(16, tree.remove());
 	}
-	
-	
-	
+
 }
