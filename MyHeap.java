@@ -145,9 +145,10 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the heap is empty
 	 */
 	public Entry<K, V> removeMin() throws EmptyPriorityQueueException {
-		// do not have to throw excepetion because calling min() checks for an
+		// do not have to throw exception because calling min() checks for an
 		// empty heap and throws it
-		return remove(_tree.root().element());
+		MyHeapEntry<K, V> minE = (MyHeapEntry<K, V>) min();
+		return remove(minE);
 
 	}
 
@@ -171,9 +172,8 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		// swap with the last position
 		Position<MyHeapEntry<K, V>> lastPosition = _tree.getLastPosition();
 		Position<MyHeapEntry<K, V>> checkedPosition = checkedEntry.get_position();
-		swapElementPositions(lastPosition, checkedPosition);
 		_tree.swapElements(lastPosition, checkedPosition);
-		//swapElementPositions(lastPosition, checkedPosition);
+		swapElementPositions(lastPosition, checkedPosition);
 
 		// sort down
 		downSort(checkedPosition);
@@ -279,9 +279,8 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 			// attempt to swap child
 			if (_comparator.compare(position.element().getKey(), smallerPosition.element().getKey()) > 0) {
 				// swap elements
-				swapElementPositions(position, smallerPosition);
 				_tree.swapElements(position, smallerPosition);
-				//swapElementPositions(position, smallerPosition);
+				swapElementPositions(position, smallerPosition);
 				// new position to check is old position of smaller child
 				position = smallerPosition;
 			} else {
@@ -302,9 +301,8 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		try {
 			while (!_tree.isRoot(p)
 					&& _comparator.compare(p.element().getKey(), _tree.parent(p).element().getKey()) < 0) {
-				swapElementPositions(p, _tree.parent(p));
 				_tree.swapElements(p, _tree.parent(p));
-				//swapElementPositions(p, _tree.parent(p));
+				swapElementPositions(p, _tree.parent(p));
 				p = _tree.parent(p);
 				restingPosition = p;
 			}
@@ -315,9 +313,9 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	}
 
 	public void swapElementPositions(Position<MyHeapEntry<K, V>> firstPos, Position<MyHeapEntry<K, V>> secondPos) {
-//		Position<MyHeapEntry<K, V>> swapped1 = firstPos;
-//		firstPos.element().set_position(secondPos);
-//		secondPos.element().set_position(swapped1);
+		 Position<MyHeapEntry<K, V>> swapped1 = firstPos;
+		// firstPos.element().set_position(secondPos);
+		// secondPos.element().set_position(swapped1);
 		MyHeapEntry e1 = firstPos.element();
 		MyHeapEntry e2 = secondPos.element();
 		e1.set_position(secondPos);
