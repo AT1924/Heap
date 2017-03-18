@@ -114,7 +114,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		if (isEmpty()) {
 			throw new EmptyPriorityQueueException("Cannot get entry as heap is empty");
 		}
-		return null;
+		return _tree.root().element();
 	}
 
 	/**

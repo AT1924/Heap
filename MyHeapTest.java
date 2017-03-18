@@ -29,7 +29,7 @@ import net.datastructures.Entry;
  * - Name the test method descriptively, mentioning what is being tested (it is
  * ok to have slightly verbose method names here) - Set-up the program state
  * (ex: instantiate a heap and insert K,V pairs into it) - Use assertions to
- * validate that the progam is in the state you expect it to be
+ * validate that the program is in the state you expect it to be
  * 
  * We've given you four example of test cases below that should help you
  * understand syntax and the general structure of tests.
@@ -74,10 +74,8 @@ public class MyHeapTest {
 		}
 
 		// check that the actual ordering matches the expected ordering by using
-		// one assert
-		// Note that assertThat(actual, is(expected)), when used on lists/
-		// arrays, also checks that the
-		// ordering is the same.
+		// one assert. Note that assertThat(actual, is(expected)), when used on
+		// lists/arrays, also checks that the ordering is the same.
 		assertThat(actualKeys, is(expectedKeys));
 	}
 
