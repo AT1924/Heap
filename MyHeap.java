@@ -174,7 +174,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		downSort(checkedPosition);
 
 		// up sort?
-		_tree.reorderTree(checkedPosition);
+		reorderTree(checkedPosition);
 
 		// delete from tree and return entry
 		return _tree.remove();
@@ -305,5 +305,10 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 
 		}
 		return restingPosition;
+	}
+
+	public Object add(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
