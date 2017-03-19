@@ -175,31 +175,8 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		swapValuesandKeys(checkedEntry, last);
 		downSort(checkedEntry.get_position());
 		upSort(checkedEntry.get_position());
-		
+
 		return last;
-
-		// swapping keys and values
-//		K lastKey = last.getKey();
-//		V lastVal = last.getValue();
-//
-//		// have to happen in this order
-//		replaceValue(last, entry.getValue());
-//		replaceKey(last, entry.getKey());
-//		replaceValue(entry, lastVal);
-//		replaceKey(entry, lastKey);
-
-		// sort
-		// downSort(checkedEntry.get_position());
-		// upSort(checkedEntry.get_position());
-
-
-		// swap with the last position
-		// Position<MyHeapEntry<K, V>> lastPosition = _tree.getLastPosition();
-		// Position<MyHeapEntry<K, V>> checkedPosition =
-		// checkedEntry.get_position();
-		// swapElementsAndPositions(lastPosition, checkedPosition);
-
-		// return _tree.remove();
 	}
 
 	/**
@@ -277,7 +254,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 * problems in keeping each occurrence "up-to-date."
 	 */
 
-	// TODO -- upsort as well
 	/**
 	 * Reorder a position with respect to it's children. Walk down the tree,
 	 * swapping with any child node that has a smaller key.
@@ -347,29 +323,4 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		second.setKey(oldKey);
 		second.setValue(oldVal);
 	}
-
-	/**
-	 * Swaps the elements of two positions and updates the position inside each
-	 * element
-	 * 
-	 * @param firstPos
-	 *            A tree position
-	 * @param secondPos
-	 *            Another tree position
-	 * 
-	 */
-	// public void swapElementsAndPositions(Position<MyHeapEntry<K, V>>
-	// firstPos, Position<MyHeapEntry<K, V>> secondPos) {
-	// // update position in elements
-	// MyHeapEntry<K, V> first = firstPos.element();
-	// MyHeapEntry<K, V> second = secondPos.element();
-	//
-	// // swap elements
-	// _tree.swapElements(firstPos, secondPos);
-	//
-	// // correct positions
-	// first.set_position(secondPos);
-	// second.set_position(firstPos);
-	// System.out.print("");
-	// }
 }
