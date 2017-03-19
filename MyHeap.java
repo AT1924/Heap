@@ -132,7 +132,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	public Entry<K, V> insert(K key, V value) throws InvalidKeyException {
 		MyHeapEntry<K, V> entry = new MyHeapEntry<K, V>(key, value);
 		entry.set_position(_tree.add(entry));
-		reorderTree(entry.get_position());
+		upSort(entry.get_position());
 		return entry;
 	}
 
@@ -172,18 +172,28 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		// prune last
 		MyHeapEntry<K, V> last = _tree.remove();
 
-		// swap with the last position
-		Position<MyHeapEntry<K, V>> lastPosition = _tree.getLastPosition();
-		Position<MyHeapEntry<K, V>> checkedPosition = checkedEntry.get_position();
-		swapElementsAndPositions(lastPosition, checkedPosition);
+		// swapping keys and values
+		K lastKey = last.getKey();
+		V lastVal = last.getValue();
 
-		// sort down
-		downSort(checkedPosition);
+		// have to happen in this order
+		replaceKey(last, entry.getKey());
+		replaceValue(last, entry.getValue());
+		replaceKey(entry, lastKey);
+		replaceValue(entry, lastVal);
 
-		// up sort?
-		reorderTree(checkedPosition);
+		// sort
+		downSort(checkedEntry.get_position());
+		upSort(checkedEntry.get_position());
 
 		return last;
+
+		// swap with the last position
+		// Position<MyHeapEntry<K, V>> lastPosition = _tree.getLastPosition();
+		// Position<MyHeapEntry<K, V>> checkedPosition =
+		// checkedEntry.get_position();
+		// swapElementsAndPositions(lastPosition, checkedPosition);
+
 		// return _tree.remove();
 	}
 
@@ -293,7 +303,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	/*
 	 * reorders tree when element is inserted
 	 */
-	public Position<MyHeapEntry<K, V>> reorderTree(Position<MyHeapEntry<K, V>> p) {
+	public Position<MyHeapEntry<K, V>> upSort(Position<MyHeapEntry<K, V>> p) {
 		// linearly updates the parents
 		// if the node that has been added is greater than its parents swap with
 		// parent
