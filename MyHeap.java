@@ -2,7 +2,6 @@ package heap;
 
 import java.util.Comparator;
 import net.datastructures.CompleteBinaryTree;
-import net.datastructures.DefaultComparator;
 import net.datastructures.EmptyPriorityQueueException;
 import net.datastructures.Entry;
 import net.datastructures.InvalidEntryException;
@@ -33,8 +32,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *            comparator to be used for heap keys
 	 */
 	public MyHeap(Comparator<K> comparator) {
-		_tree = new MyLinkedHeapTree();
-		_tree.set_comparator(comparator);
+		_tree = new MyLinkedHeapTree<MyHeapEntry<K, V>>();
 		_comparator = comparator;
 	}
 
@@ -49,7 +47,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 * @throws IllegalArgumentException
 	 *             if null comparator is passed in
 	 */
-	// TODO need to update comparator
 	public void setComparator(Comparator<K> comparator) throws IllegalStateException, IllegalArgumentException {
 		if (!isEmpty()) {
 			throw new IllegalStateException("priority queue is not empty");
@@ -57,8 +54,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		if (comparator == null) {
 			throw new IllegalArgumentException("null comparator");
 		}
-		_tree.set_comparator(comparator);
-
 	}
 
 	/**
@@ -82,7 +77,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 * @return an int representing the number of entries stored
 	 */
 	public int size() {
-		// does this run in O(1) time?
 		return _tree.size();
 
 	}
@@ -112,7 +106,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		// make sure to cache minimum and make sure to update and remove a node
 		// keep an arrayList of entries
 		if (isEmpty()) {
-			throw new EmptyPriorityQueueException("Cannot get entry as heap is empty");
+			throw new EmptyPriorityQueueException("heap is empty");
 		}
 		return _tree.root().element();
 	}
@@ -130,6 +124,10 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the key is not suitable for this heap
 	 */
 	public Entry<K, V> insert(K key, V value) throws InvalidKeyException {
+		if ((int) key < 1 || (int) key > 99) {
+			throw new InvalidKeyException("key out of appropriate range");
+		}
+
 		MyHeapEntry<K, V> entry = new MyHeapEntry<K, V>(key, value);
 		entry.set_position(_tree.add(entry));
 		upSort(entry.get_position());
@@ -147,9 +145,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	public Entry<K, V> removeMin() throws EmptyPriorityQueueException {
 		// do not have to throw exception because calling min() checks for an
 		// empty heap and throws it
-		MyHeapEntry<K, V> minE = (MyHeapEntry<K, V>) min();
-		return remove(minE);
-
+		return remove(min());
 	}
 
 	/**
@@ -194,13 +190,16 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the key is invalid
 	 */
 	public K replaceKey(Entry<K, V> entry, K key) throws InvalidEntryException, InvalidKeyException {
+		// throws InvalidEntryException when necessary
 		MyHeapEntry<K, V> checkedEntry = this.checkAndConvertEntry(entry);
-		// TODO -- need invalidkeyexception
+		if ((int) key < 1 || (int) key > 99) {
+			throw new InvalidKeyException("key is not in appropriate range");
+		}
 
 		K oldKey = checkedEntry.getKey();
 		checkedEntry.setKey(key);
 
-		// call sorting methods to make sure the tree is in order
+		// sort
 		downSort(checkedEntry.get_position());
 		upSort(checkedEntry.get_position());
 
@@ -219,6 +218,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the entry cannot have its value replaced
 	 */
 	public V replaceValue(Entry<K, V> entry, V value) throws InvalidEntryException {
+		//throws InvalidEntryException if needed
 		MyHeapEntry<K, V> checkedEntry = this.checkAndConvertEntry(entry);
 
 		V oldVal = checkedEntry.getValue();
