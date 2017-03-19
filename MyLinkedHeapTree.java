@@ -1,12 +1,8 @@
 package heap;
 
 import java.util.ArrayDeque;
-import java.util.Comparator;
 
-import javafx.scene.control.TableView.ResizeFeatures;
-import net.datastructures.BoundaryViolationException;
 import net.datastructures.CompleteBinaryTree;
-import net.datastructures.Deque;
 import net.datastructures.EmptyTreeException;
 import net.datastructures.LinkedBinaryTree;
 import net.datastructures.Position;
@@ -31,7 +27,6 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 
 	// instance variables
 	private ArrayDeque<Position<E>> _positions;
-	private Comparator _comparator;
 
 	/**
 	 * Default constructor. The tree begins empty.
@@ -130,10 +125,6 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 			remove(child);
 		}
 		return child.element();
-	}
-
-	public void set_comparator(Comparator _comparator) {
-		this._comparator = _comparator;
 	}
 
 	/*

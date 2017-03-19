@@ -2,7 +2,6 @@ package heap;
 
 import java.util.Comparator;
 import net.datastructures.CompleteBinaryTree;
-import net.datastructures.DefaultComparator;
 import net.datastructures.EmptyPriorityQueueException;
 import net.datastructures.Entry;
 import net.datastructures.InvalidEntryException;
@@ -33,8 +32,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *            comparator to be used for heap keys
 	 */
 	public MyHeap(Comparator<K> comparator) {
-		_tree = new MyLinkedHeapTree();
-		_tree.set_comparator(comparator);
+		_tree = new MyLinkedHeapTree<MyHeapEntry<K, V>>();
 		_comparator = comparator;
 	}
 
@@ -49,7 +47,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 * @throws IllegalArgumentException
 	 *             if null comparator is passed in
 	 */
-	// TODO need to update comparator
 	public void setComparator(Comparator<K> comparator) throws IllegalStateException, IllegalArgumentException {
 		if (!isEmpty()) {
 			throw new IllegalStateException("priority queue is not empty");
@@ -57,8 +54,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		if (comparator == null) {
 			throw new IllegalArgumentException("null comparator");
 		}
-		_tree.set_comparator(comparator);
-
 	}
 
 	/**
@@ -82,7 +77,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 * @return an int representing the number of entries stored
 	 */
 	public int size() {
-		// does this run in O(1) time?
 		return _tree.size();
 
 	}
@@ -112,7 +106,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		// make sure to cache minimum and make sure to update and remove a node
 		// keep an arrayList of entries
 		if (isEmpty()) {
-			throw new EmptyPriorityQueueException("Cannot get entry as heap is empty");
+			throw new EmptyPriorityQueueException("heap is empty");
 		}
 		return _tree.root().element();
 	}
@@ -130,6 +124,10 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the key is not suitable for this heap
 	 */
 	public Entry<K, V> insert(K key, V value) throws InvalidKeyException {
+		if ((int) key < 1 || (int) key > 99) {
+			throw new InvalidKeyException("key out of appropriate range");
+		}
+
 		MyHeapEntry<K, V> entry = new MyHeapEntry<K, V>(key, value);
 		entry.set_position(_tree.add(entry));
 		upSort(entry.get_position());
@@ -147,9 +145,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	public Entry<K, V> removeMin() throws EmptyPriorityQueueException {
 		// do not have to throw exception because calling min() checks for an
 		// empty heap and throws it
-		MyHeapEntry<K, V> minE = (MyHeapEntry<K, V>) min();
-		return remove(minE);
-
+		return remove(min());
 	}
 
 	/**
@@ -172,29 +168,11 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		// prune last
 		MyHeapEntry<K, V> last = _tree.remove();
 
-		// swapping keys and values
-		K lastKey = last.getKey();
-		V lastVal = last.getValue();
-
-		// have to happen in this order
-		replaceKey(last, entry.getKey());
-		replaceValue(last, entry.getValue());
-		replaceKey(entry, lastKey);
-		replaceValue(entry, lastVal);
-
-		// sort
+		swapValuesandKeys(checkedEntry, last);
 		downSort(checkedEntry.get_position());
 		upSort(checkedEntry.get_position());
 
 		return last;
-
-		// swap with the last position
-		// Position<MyHeapEntry<K, V>> lastPosition = _tree.getLastPosition();
-		// Position<MyHeapEntry<K, V>> checkedPosition =
-		// checkedEntry.get_position();
-		// swapElementsAndPositions(lastPosition, checkedPosition);
-
-		// return _tree.remove();
 	}
 
 	/**
@@ -212,15 +190,19 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the key is invalid
 	 */
 	public K replaceKey(Entry<K, V> entry, K key) throws InvalidEntryException, InvalidKeyException {
+		// throws InvalidEntryException when necessary
 		MyHeapEntry<K, V> checkedEntry = this.checkAndConvertEntry(entry);
-		
+		if ((int) key < 1 || (int) key > 99) {
+			throw new InvalidKeyException("key is not in appropriate range");
+		}
+
 		K oldKey = checkedEntry.getKey();
 		checkedEntry.setKey(key);
-		
-		// call sorting methods to make sure the tree is in order
+
+		// sort
 		downSort(checkedEntry.get_position());
 		upSort(checkedEntry.get_position());
-		
+
 		return oldKey;
 	}
 
@@ -236,8 +218,9 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the entry cannot have its value replaced
 	 */
 	public V replaceValue(Entry<K, V> entry, V value) throws InvalidEntryException {
+		//throws InvalidEntryException if needed
 		MyHeapEntry<K, V> checkedEntry = this.checkAndConvertEntry(entry);
-		
+
 		V oldVal = checkedEntry.getValue();
 		checkedEntry.setValue(value);
 
@@ -271,7 +254,6 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 * problems in keeping each occurrence "up-to-date."
 	 */
 
-	// TODO -- upsort as well
 	/**
 	 * Reorder a position with respect to it's children. Walk down the tree,
 	 * swapping with any child node that has a smaller key.
@@ -280,8 +262,8 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *            a (hopefully) freshly swapped position
 	 */
 	public void downSort(Position<MyHeapEntry<K, V>> position) {
-		Boolean possibleLargerChild = true;
-		while (possibleLargerChild) {
+		Boolean possibleSmallerChild = true;
+		while (possibleSmallerChild) {
 			// no children left
 			if (!_tree.hasLeft(position)) {
 				break;
@@ -299,28 +281,26 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 			// attempt to swap child
 			if (_comparator.compare(position.element().getKey(), smallerPosition.element().getKey()) > 0) {
 				// swap elements
-				swapElementsAndPositions(position, smallerPosition);
+				swapValuesandKeys(position.element(), smallerPosition.element());
 				// new position to check is old position of smaller child
 				position = smallerPosition;
 			} else {
-				possibleLargerChild = false;
+				possibleSmallerChild = false;
 			}
 		}
 	}
 
-	/*
-	 * reorders tree when element is inserted
+	/**
+	 * linearly updates the parents if the node that has been added with a key
+	 * smaller than its parent's swap with parent
 	 */
 	public Position<MyHeapEntry<K, V>> upSort(Position<MyHeapEntry<K, V>> p) {
-		// linearly updates the parents
-		// if the node that has been added is greater than its parents swap with
-		// parent
-		// test
+
 		Position<MyHeapEntry<K, V>> restingPosition = p;
 		try {
 			while (!_tree.isRoot(p)
 					&& _comparator.compare(p.element().getKey(), _tree.parent(p).element().getKey()) < 0) {
-				swapElementsAndPositions(p, _tree.parent(p));
+				swapValuesandKeys(p.element(), _tree.parent(p).element());
 				p = _tree.parent(p);
 				restingPosition = p;
 			}
@@ -331,26 +311,16 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	}
 
 	/**
-	 * Swaps the elements of two positions and updates the position inside each
-	 * element
-	 * 
-	 * @param firstPos
-	 *            A tree position
-	 * @param secondPos
-	 *            Another tree position
-	 * 
+	 * swamps elements and keys of two given entries without sorting
 	 */
-	public void swapElementsAndPositions(Position<MyHeapEntry<K, V>> firstPos, Position<MyHeapEntry<K, V>> secondPos) {
-		// update position in elements
-		MyHeapEntry<K, V> first = firstPos.element();
-		MyHeapEntry<K, V> second = secondPos.element();
+	public void swapValuesandKeys(MyHeapEntry<K, V> first, MyHeapEntry<K, V> second) {
+		K oldKey = first.getKey();
+		V oldVal = first.getValue();
 
-		// swap elements
-		_tree.swapElements(firstPos, secondPos);
+		first.setKey(second.getKey());
+		first.setValue(second.getValue());
 
-		// correct positions
-		first.set_position(secondPos);
-		second.set_position(firstPos);
-		System.out.print("");
+		second.setKey(oldKey);
+		second.setValue(oldVal);
 	}
 }

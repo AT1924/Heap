@@ -96,9 +96,9 @@ public class MyHeapTest {
 		// test the heap ordering by asserting on all elements
 		assertThat(heap.removeMin().getKey(), is(11));
 		assertThat(heap.removeMin().getKey(), is(13));
-		// assertThat(heap.removeMin().getKey(), is(16));
-		// assertThat(heap.removeMin().getKey(), is(44));
-		// assertThat(heap.removeMin().getKey(), is(64));
+		assertThat(heap.removeMin().getKey(), is(16));
+		assertThat(heap.removeMin().getKey(), is(44));
+		assertThat(heap.removeMin().getKey(), is(64));
 	}
 
 	/**
@@ -225,9 +225,15 @@ public class MyHeapTest {
 		Entry<Integer, String> entry5 = heap.insert(44, "E");
 
 		heap.replaceKey(entry1, 10);
+<<<<<<< HEAD
 		assertEquals((int) entry1.getKey(), 10);
 		heap.replaceKey(entry1, 14);
 		assertEquals((int) entry1.getKey(), 14);
+=======
+		assertEquals(10, (int) entry1.getKey());
+		heap.replaceKey(entry1, 14);
+		assertEquals(13, (int) entry1.getKey());
+>>>>>>> 842510a31f984ba300b547b51c5fa25155c87541
 
 	}
 
