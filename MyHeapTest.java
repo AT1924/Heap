@@ -197,4 +197,41 @@ public class MyHeapTest {
 		}
 
 	}
+	
+	@Test()
+	public void testReplaceValue(){
+		MyHeap heap = new MyHeap(new IntegerComparator());
+
+		Entry<Integer, String> entry1 = heap.insert(11, "A");
+		Entry<Integer, String> entry2 = heap.insert(13, "B");
+		Entry<Integer, String> entry3 = heap.insert(64, "C");
+		Entry<Integer, String> entry4 = heap.insert(16, "D");
+		Entry<Integer, String> entry5 = heap.insert(44, "E");
+		
+		heap.replaceValue(entry1, "Z");
+		assertEquals(entry1.getValue(),"Z");
+		heap.replaceValue(entry1,"Y");
+		assertEquals(entry1.getValue(),"Y");
+	}
+
+	
+	@Test()
+	public void testReplaceKey(){
+		MyHeap heap = new MyHeap(new IntegerComparator());
+
+		Entry<Integer, String> entry1 = heap.insert(11, "A");
+		Entry<Integer, String> entry2 = heap.insert(13, "B");
+		Entry<Integer, String> entry3 = heap.insert(64, "C");
+		Entry<Integer, String> entry4 = heap.insert(16, "D");
+		Entry<Integer, String> entry5 = heap.insert(44, "E");
+		
+		heap.replaceKey(entry1, 10);
+		assertEquals((int) entry1.getKey(), 10);
+		 heap.replaceKey(entry1, 14);
+		assertEquals((int) entry1.getKey(), 13);
+		
+	
+	}
+	
+	
 }
