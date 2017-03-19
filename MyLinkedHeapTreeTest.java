@@ -71,8 +71,7 @@ public class MyLinkedHeapTreeTest {
 		// setup
 		MyLinkedHeapTree<MyHeapEntry> tree = new MyLinkedHeapTree<MyHeapEntry>();
 
-		tree.set_comparator(new IntegerComparator());
-
+		
 		MyHeapEntry entry1 = new MyHeapEntry(1, "ABC");
 		MyHeapEntry entry2 = new MyHeapEntry(2, "DEF");
 		MyHeapEntry entry3 = new MyHeapEntry(10, "GHI");
@@ -120,7 +119,6 @@ public class MyLinkedHeapTreeTest {
 	@Test()
 	public void testRemove() {
 		MyLinkedHeapTree tree = new MyLinkedHeapTree();
-		tree.set_comparator(new IntegerComparator());
 
 		tree.add(24);
 		tree.add(16);
