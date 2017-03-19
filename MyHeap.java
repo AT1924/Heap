@@ -213,6 +213,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 */
 	public K replaceKey(Entry<K, V> entry, K key) throws InvalidEntryException, InvalidKeyException {
 		MyHeapEntry<K, V> checkedEntry = this.checkAndConvertEntry(entry);
+		//TODO -- need invalidkeyexception
 		
 		K oldKey = checkedEntry.getKey();
 		checkedEntry.setKey(key);

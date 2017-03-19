@@ -228,7 +228,7 @@ public class MyHeapTest {
 		heap.replaceKey(entry1, 10);
 		assertEquals((int) entry1.getKey(), 10);
 		 heap.replaceKey(entry1, 14);
-		assertEquals((int) entry1.getKey(), 13);
+		assertEquals((int) entry1.getKey(), 14);
 		
 	
 	}
