@@ -96,9 +96,9 @@ public class MyHeapTest {
 		// test the heap ordering by asserting on all elements
 		assertThat(heap.removeMin().getKey(), is(11));
 		assertThat(heap.removeMin().getKey(), is(13));
-//		assertThat(heap.removeMin().getKey(), is(16));
-//		assertThat(heap.removeMin().getKey(), is(44));
-//		assertThat(heap.removeMin().getKey(), is(64));
+		// assertThat(heap.removeMin().getKey(), is(16));
+		// assertThat(heap.removeMin().getKey(), is(44));
+		// assertThat(heap.removeMin().getKey(), is(64));
 	}
 
 	/**
@@ -197,9 +197,9 @@ public class MyHeapTest {
 		}
 
 	}
-	
+
 	@Test()
-	public void testReplaceValue(){
+	public void testReplaceValue() {
 		MyHeap heap = new MyHeap(new IntegerComparator());
 
 		Entry<Integer, String> entry1 = heap.insert(11, "A");
@@ -207,16 +207,15 @@ public class MyHeapTest {
 		Entry<Integer, String> entry3 = heap.insert(64, "C");
 		Entry<Integer, String> entry4 = heap.insert(16, "D");
 		Entry<Integer, String> entry5 = heap.insert(44, "E");
-		
+
 		heap.replaceValue(entry1, "Z");
-		assertEquals(entry1.getValue(),"Z");
-		heap.replaceValue(entry1,"Y");
-		assertEquals(entry1.getValue(),"Y");
+		assertEquals(entry1.getValue(), "Z");
+		heap.replaceValue(entry1, "Y");
+		assertEquals(entry1.getValue(), "Y");
 	}
 
-	
 	@Test()
-	public void testReplaceKey(){
+	public void testReplaceKey() {
 		MyHeap heap = new MyHeap(new IntegerComparator());
 
 		Entry<Integer, String> entry1 = heap.insert(11, "A");
@@ -224,14 +223,12 @@ public class MyHeapTest {
 		Entry<Integer, String> entry3 = heap.insert(64, "C");
 		Entry<Integer, String> entry4 = heap.insert(16, "D");
 		Entry<Integer, String> entry5 = heap.insert(44, "E");
-		
+
 		heap.replaceKey(entry1, 10);
 		assertEquals((int) entry1.getKey(), 10);
-		 heap.replaceKey(entry1, 14);
-		assertEquals((int) entry1.getKey(), 13);
-		
-	
+		heap.replaceKey(entry1, 14);
+		assertEquals((int) entry1.getKey(), 14);
+
 	}
-	
-	
+
 }
