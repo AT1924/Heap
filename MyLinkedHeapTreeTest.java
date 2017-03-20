@@ -32,7 +32,7 @@ public class MyLinkedHeapTreeTest {
 	 * to the tree.
 	 */
 	@Test
-	// TODO pass this test
+	
 	public void testAddOneElement() {
 		MyLinkedHeapTree<Integer> tree = new MyLinkedHeapTree<Integer>();
 		tree.add(1);
@@ -47,7 +47,7 @@ public class MyLinkedHeapTreeTest {
 		assertTrue(tree.size() == 1);
 	}
 
-	// TODO -- add tests for adding/removing multiple elements
+	
 
 	/**
 	 * This is an example of how to test whether an exception you expect to be
@@ -66,12 +66,16 @@ public class MyLinkedHeapTreeTest {
 	 * TODO: Write your own tests below! Think of edge cases for add/remove and
 	 * try to test your helper methods (if applicable).
 	 */
+	
+	/*
+	 * Tests the ability of MyLinkedHeapTree's add method. It makes sure that all positions 
+	 * have the correct entries and that the size is correct.
+	 */
 	@Test()
 	public void testAddElement() {
-		// setup
+		
 		MyLinkedHeapTree<MyHeapEntry> tree = new MyLinkedHeapTree<MyHeapEntry>();
 
-		
 		MyHeapEntry entry1 = new MyHeapEntry(1, "ABC");
 		MyHeapEntry entry2 = new MyHeapEntry(2, "DEF");
 		MyHeapEntry entry3 = new MyHeapEntry(10, "GHI");
@@ -95,7 +99,7 @@ public class MyLinkedHeapTreeTest {
 	 */
 	@Test()
 	public void testMyHeapEntry() {
-		// test
+
 		MyHeapEntry ent = new MyHeapEntry(1, "the value");
 
 		// test get/set
@@ -115,7 +119,9 @@ public class MyLinkedHeapTreeTest {
 		}
 
 	}
-
+	/*
+	 * Test that the remove method removes from the last node in the tree
+	 */
 	@Test()
 	public void testRemove() {
 		MyLinkedHeapTree tree = new MyLinkedHeapTree();

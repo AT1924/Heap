@@ -19,13 +19,15 @@ import net.datastructures.Position;
  * within the tree.
  * 
  * Feel free to add additional comments.
+ * 
+ * This class implemented an ArrayDeque of Positions <E> in order to keep track of the positions of the 
+ * LinkedBinaryTree
  */
 
-// TODO readme: include justification for using linear updating while reordering
-// the tree
+
 public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements CompleteBinaryTree<E> {
 
-	// instance variables
+	
 	private ArrayDeque<Position<E>> _positions;
 
 	/**
@@ -51,9 +53,6 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 	 * @return the Position of the newly inserted element
 	 */
 
-	// TODO for testing purposes
-
-	// when adding an element you have to reorder the tree
 
 	@Override
 	public Position<E> add(E element) {
@@ -104,8 +103,10 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		if (isEmpty()) {
 			throw new EmptyTreeException("You can not remove when the tree is empty");
 		}
-
+		// get the last node of the tree 
 		Position<E> child = _positions.peekLast();
+		
+		// check the edge case in that the tree only has one node
 		if (isRoot(child)) {
 			_positions.removeLast();
 			return remove(child);
@@ -113,12 +114,14 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 		}
 		Position<E> parent = parent(child);
 
+		// checking whether the last node (child) is a right or left child
+		
 		if (hasLeft(parent) && left(parent) == child) {
 			_positions.removeLast();
 			remove(child);
 
 		}
-
+		// if it is a right child remove it and add the parent back onto the deque
 		if (hasRight(parent) && right(parent) == child) {
 			_positions.removeLast();
 			_positions.addFirst(parent(child));
@@ -129,6 +132,10 @@ public class MyLinkedHeapTree<E> extends LinkedBinaryTree<E> implements Complete
 
 	/*
 	 * Feel free to add helper methods here. Add helper methods here.
+	 */
+	
+	/*
+	 *  getter of the last position of the tree, for use in MyHeap class
 	 */
 	public Position<E> getLastPosition() {
 		return _positions.peekLast();

@@ -1,1 +1,36 @@
-use try catch in reorder class MyLinkedHeapTree: reorderTree()
+		
+		
+		My implementation of the Heap AdaptablePriorityQueue<K, V> does not have any very large changes to the general 
+	structure of the project. In terms of classes, both MyLinkedHeapTree and MyHeapEntry are underlying classes for 
+	MyHeap, and MyHeapEntry also is an underlying class for MyLinkedHeapTree.
+	
+		MyHeapEntry only features one change to the given code and that is the addition of a position variable, and helper 
+	methods in order to get and set these positions in other classes. This is a very important design choice as it is what 
+	allows for my methods in MyHeap to run under their specific runtime requirements. By making each entry self aware of it's
+	position we can modify these positions to allow for "swapping" that preserves the min heap order.
+	
+		MyLinkedHeapTree also does not feature many important individual design choices. It implements an ArrayDeque which 
+	I believed to be the best data structure to keep track of node positions in the binary tree due to its ease of use
+	and variety of methods. Both add and remove methods feature use of this ArrayDeque in order to function under their 
+	runtime requirements. I also implemented a helper method that gets the last position of the tree for use in the MyHeap
+	class.
+	
+		The MyHeap class is where the most important design choices were made. Particularly instead of swapping positions
+	or using the built in function swapElements() I found it easier and more understandable to use the methods 
+	the helper method swapValuesandKeys() when swapping entries. This allowed me to keep the the hardest part of code,
+	the preservation of min Heap order, relatively simple. In order to run under runtime requirements I used three helper methods.
+	The helper method swapValuesandKeys() is the underlying method for all swapping in this class. 
+	The difference between swapValuesandKeys() and replaceValue() and replaceKey() is 
+	that swapValuesandKeys() does not reorder the tree. This allowed me to avoid calling an infinite loop between the 
+	actual swapping methods upSort() and downSort() that traverse the tree. As those methods reorder themselves 
+	using swapValuesandKeys() and preserves min Heap order. The method upSort() is specifically for swapping where 
+	the node added with a key that is smaller than its parent's swap. The method downSort() reorders the tree with respect
+	to a node's child and traverses down the tree. 
+	
+		My testing includes tests that not only test one method but test a variety of methods under different circumstances
+	to ensure correctness. Not all methods have tests, because tests of some methods call those underlying methods and thus
+	test them. For instance in MyHeapTest, there are no tests for the helper methods swapValuesandKeys(), downSort() and 
+	upSort() because they are already called in the tests for insert() and remove(). All individual methods that are not java 
+	based methods such as getters and setters have their own tests. 
+	 
+		

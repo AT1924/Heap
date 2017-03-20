@@ -17,6 +17,10 @@ import support.heap.HeapWrapper;
  * documentation, and remember that the running time of a "called" method sets
  * the minimum running time of the "calling" method. Feel free to add additional
  * comments.
+ * 
+ * This class implements all of the stubbed methods using helper methods that provide 
+ * easy access to entries keys and values. The helper methods also allow for sorting in order to
+ * maintain the min heap structure where each parent's key is smaller than that of it's child
  */
 
 public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K, V> {
@@ -77,6 +81,8 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 * @return an int representing the number of entries stored
 	 */
 	public int size() {
+		// as size of the heap is equal to the size of the tree
+		// return the size of the tree
 		return _tree.size();
 
 	}
@@ -103,11 +109,11 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the heap is empty
 	 */
 	public Entry<K, V> min() throws EmptyPriorityQueueException {
-		// make sure to cache minimum and make sure to update and remove a node
-		// keep an arrayList of entries
+		
 		if (isEmpty()) {
 			throw new EmptyPriorityQueueException("heap is empty");
 		}
+		// due to min heap structure the minimum value will always be the root
 		return _tree.root().element();
 	}
 
@@ -129,9 +135,11 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		}
 
 		MyHeapEntry<K, V> entry = new MyHeapEntry<K, V>(key, value);
+		// in order to allow for O(logn) runtime manipulation of the tree set entry's position
 		entry.set_position(_tree.add(entry));
-		upSort(entry.get_position());
-		return entry;
+		// check to see if the inserted entry has child whose key is larger than its own, if so swap
+		return upSort(entry.get_position()).element();
+		
 	}
 
 	/**
@@ -165,12 +173,14 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 			throw new InvalidEntryException("entry not in tree");
 		}
 
-		// prune last
+		// prune last node of tree
 		MyHeapEntry<K, V> last = _tree.remove();
 
-		swapValuesandKeys(checkedEntry, last);
-		downSort(checkedEntry.get_position());
-		upSort(checkedEntry.get_position());
+		if (_tree.size() > 0) {
+			swapValuesandKeys(checkedEntry, last);
+			downSort(checkedEntry.get_position());
+			upSort(checkedEntry.get_position());
+		}
 
 		return last;
 	}
@@ -199,7 +209,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 		K oldKey = checkedEntry.getKey();
 		checkedEntry.setKey(key);
 
-		// sort
+		// sort if new key is larger or smaller than child
 		downSort(checkedEntry.get_position());
 		upSort(checkedEntry.get_position());
 
@@ -218,7 +228,7 @@ public class MyHeap<K, V> implements HeapWrapper<K, V>, AdaptablePriorityQueue<K
 	 *             if the entry cannot have its value replaced
 	 */
 	public V replaceValue(Entry<K, V> entry, V value) throws InvalidEntryException {
-		//throws InvalidEntryException if needed
+		// throws InvalidEntryException if needed
 		MyHeapEntry<K, V> checkedEntry = this.checkAndConvertEntry(entry);
 
 		V oldVal = checkedEntry.getValue();

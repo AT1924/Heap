@@ -193,7 +193,7 @@ public class MyHeapTest {
 		// order of leaves 65, 55, 47, 34, 45
 		int[] list = { 47, 65, 55, 45, 34 };
 		for (int i = 0; i < list.length; i++) {
-			// assertEquals(list[i], heap.remove());
+			 assertEquals(list[i], (int) heap.getTree().remove().getKey());
 		}
 
 	}
@@ -225,15 +225,10 @@ public class MyHeapTest {
 		Entry<Integer, String> entry5 = heap.insert(44, "E");
 
 		heap.replaceKey(entry1, 10);
-<<<<<<< HEAD
-		assertEquals((int) entry1.getKey(), 10);
-		heap.replaceKey(entry1, 14);
-		assertEquals((int) entry1.getKey(), 14);
-=======
 		assertEquals(10, (int) entry1.getKey());
 		heap.replaceKey(entry1, 14);
 		assertEquals(13, (int) entry1.getKey());
->>>>>>> 842510a31f984ba300b547b51c5fa25155c87541
+
 
 	}
 

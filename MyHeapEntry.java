@@ -11,11 +11,12 @@ import net.datastructures.Position;
  * in O(1) time.
  *
  * Feel free to add additional comments.
+ * 
+ * The only change to this class was the addition of helper method that get and set a MyHeapEntry's position.
  */
 
 public class MyHeapEntry<K, V> implements Entry<K, V> {
 
-	// instance variables
 	K key;
 	V value;
 	Position<MyHeapEntry<K, V>> _position;
@@ -65,7 +66,10 @@ public class MyHeapEntry<K, V> implements Entry<K, V> {
 		return value;
 	}
 	
-	//helper methods
+	/*
+	 * These helper methods allow the a MyHeapEntry to be position aware which is the basis for runtime
+	 * of the methods in the MyHeap class
+	 */
 	
 	public Position<MyHeapEntry<K,V>> get_position() {
 		return _position;
